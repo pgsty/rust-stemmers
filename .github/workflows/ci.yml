@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - name: Install stable Rust
-        run: rustup update stable --profile minimal --component rustfmt
+        run: rustup toolchain install stable --profile minimal --component rustfmt --no-self-update
       - name: Check formatting
         run: cargo +stable fmt --check
       - name: Test debug build and documentation
