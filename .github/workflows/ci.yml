@@ -1,0 +1,30 @@
+name: Rust
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Install stable Rust
+        run: rustup update stable --profile minimal --component rustfmt
+      - name: Check formatting
+        run: cargo +stable fmt --check
+      - name: Test debug build and documentation
+        run: cargo +stable test --offline
+      - name: Test release build
+        run: cargo +stable test --offline --release

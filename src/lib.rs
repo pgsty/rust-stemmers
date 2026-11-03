@@ -7,7 +7,7 @@
 //! # Usage
 //! ```toml
 //! [dependencies]
-//! rust-stemmers = "^1.0"
+//! rust-stemmers = { git = "https://github.com/pgsty/rust-stemmers.git", tag = "v1.2.1" }
 //! ```
 //!
 //! ```rust
@@ -63,7 +63,8 @@ pub enum Algorithm {
     Yiddish,
 }
 
-/// Wrapps a usable interface around the actual stemmer implementation
+/// Wraps a usable interface around the actual stemmer implementation.
+#[derive(Clone)]
 pub struct Stemmer {
     stemmer: fn(&mut SnowballEnv) -> bool,
 }
